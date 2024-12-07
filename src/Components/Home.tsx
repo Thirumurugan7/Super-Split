@@ -52,8 +52,7 @@ function Home({ setAuthToken, authToken, handleLogout }:any) {
           </p>
           <p className="font-albertsans px-32 font-medium text-lg">
             Manage group expenses and multi-chain subscriptions seamlessly
-            with Chainiacs, powered by Kinto's secure and compliant
-            infrastructure.
+
           </p>
           <div className="flex gap-5 justify-center">
             <Link to="/Dashboard">
