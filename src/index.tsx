@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import { store, persistor } from "../../FlexFuse/store/store";
+import { store, persistor } from "../store/store";
 import '@rainbow-me/rainbowkit/styles.css';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
