@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #e8e8e8;
+}
+
+.font-albertsans {
+  font-family: "Albert Sans", sans-serif;
+  font-optical-sizing: auto;
+}
+.font-dmsans {
+  font-family: "DM Sans", serif;
+  font-optical-sizing: auto;
+}
+
+.font-playfair {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+}
+
+@font-face {
+  font-family: "SpaceGrotesk";
+  font-weight: 300;
+  font-display: swap;
+  src: url("fonts/spacegrotesk-light-webfont.woff2") format("woff2"),
+    url("fonts/spacegrotesk-light-webfont.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SpaceGrotesk";
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/spacegrotesk-regular-webfont.woff2") format("woff2"),
+    url("fonts/spacegrotesk-regular-webfont.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SpaceGrotesk";
+  font-weight: 500;
+  font-display: swap;
+  src: url("fonts/spacegrotesk-medium-webfont.woff2") format("woff2"),
+    url("fonts/spacegrotesk-medium-webfont.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SpaceGrotesk";
+  font-weight: 600;
+  font-display: swap;
+  src: url("fonts/spacegrotesk-semibold-webfont.woff2") format("woff2"),
+    url("fonts/spacegrotesk-semibold-webfont.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SpaceGrotesk";
+  font-weight: 700;
+  font-display: swap;
+  src: url("fonts/spacegrotesk-bold-webfont.woff2") format("woff2"),
+    url("fonts/spacegrotesk-bold-webfont.woff") format("woff");
+}
