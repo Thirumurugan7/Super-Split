@@ -29,6 +29,21 @@ import { TiGroup } from "react-icons/ti";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import axios from 'axios';
 
+interface ContractGroup {
+  id: number;
+  name: string;
+  members: string[];
+  totalPayments: number;
+  active: boolean;
+}
+
+interface ApiResponse {
+  data: {
+    data: ContractGroup;
+  };
+}
+
+
 
 const Dashboard = ({ setAuthToken, authToken, handleLogout }:any) => {
   const walletAddress = useSelector((state: any) => state?.wallet?.address);
@@ -45,7 +60,7 @@ const Dashboard = ({ setAuthToken, authToken, handleLogout }:any) => {
   >("subscriptions");
   const ethcontractaddress =
     network === "base"
-      ? SEPOLIA_CONTRACT_ADDRESS_SENDER
+      ? POLYGON_CONTRACT_ADDRESS
       : network === "pol"
       ? POLYGON_CONTRACT_ADDRESS
       : FLARE_CONTRACT_ADDRESS_SENDER;
@@ -245,14 +260,110 @@ console.log("authy",authy);
 
         try {
           const { data } = await axios.request(options);
-          console.log(data);
+          console.log("group data",data.data);
 
 
 
-          setSubscriptionDetails((data as any[]));
-            console.log("result", subscriptionDetails);
+          const results: ContractGroup[] = [];
+  
+          const fetchSingleGroup = async (value: number): Promise<ContractGroup | null> => {
+            const options = {
+              method: 'POST',
+              url: 'https://sandbox-api.okto.tech/api/v1/readContractData',
+              headers: {
+                Authorization: `Bearer ${authy}`,
+                'Content-Type': 'application/json'
+              },
+              data: {
+                network_name: 'POLYGON_TESTNET_AMOY',
+                data: {
+                  contractAddress: ethcontractaddress,
+                  abi:    {
+                    "inputs": [
+                      {
+                        "internalType": "uint256",
+                        "name": "groupId",
+                        "type": "uint256"
+                      }
+                    ],
+                    "name": "getGroupDetails",
+                    "outputs": [
+                      {
+                        "internalType": "uint256",
+                        "name": "id",
+                        "type": "uint256"
+                      },
+                      {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                      },
+                      {
+                        "internalType": "address[]",
+                        "name": "members",
+                        "type": "address[]"
+                      },
+                      {
+                        "internalType": "uint256",
+                        "name": "totalPayments",
+                        "type": "uint256"
+                      },
+                      {
+                        "internalType": "bool",
+                        "name": "active",
+                        "type": "bool"
+                      }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                  },
+                  args: {
+                    groupId: value
+                  }
+                }
+              }
+            };
+        
+            try {
+              const { data } = await axios.request<ApiResponse>(options);
 
-            return data
+
+              return data.data;
+            } catch (error) {
+              console.error(`Error fetching data for value ${value}:`, error);
+              return null;
+            }
+          };
+        
+
+          const promises = data.data[0].map(value => fetchSingleGroup(value));
+  const resultsofall = await Promise.all(promises);
+
+console.log("results of all",resultsofall);
+
+const resultsofall1=resultsofall;
+console.log( resultsofall1[0]);
+console.log( resultsofall1[1]);
+console.log( resultsofall1[2]);
+console.log( resultsofall1[3]);
+
+const formattedData: [bigint[], string[], bigint[], boolean[]] = [[], [], [], []];
+
+for (let i = 0; i < resultsofall1.length; i++) {
+  formattedData[0].push(resultsofall1[i][0]); // IDs
+  formattedData[1].push(resultsofall1[i][1]); // Names  
+  formattedData[2].push(resultsofall1[i][3]); // Payments
+  formattedData[3].push(resultsofall1[i][4]); // Active status
+}
+
+setGroupExpenses(formattedData);
+
+console.log("asfgsf",formattedData);
+
+          // setGroupExpenses((resultsofall[0] as any[]));
+            console.log("result", groupExpenses);
+
+            return data.data[0]
         } catch (error) {
           console.error(error);
         }
@@ -264,7 +375,69 @@ console.log("authy",authy);
 
     try {
       const result = await GETGROUPEXPENSE();
-      setGroupExpenses(result as [bigint[], string[], bigint[], boolean[]]);
+console.log("resulessfd",result);
+
+   
+      //   method: 'POST',
+      //   url: 'https://sandbox-api.okto.tech/api/v1/readContractData',
+      //   headers: {Authorization: `Bearer ${authy}`, 'Content-Type': 'application/json'},
+      //   data: {
+      //     network_name: 'POLYGON_TESTNET_AMOY',
+      //     data: {
+      //       contractAddress: ethcontractaddress,
+      //       abi:    {
+      //         "inputs": [
+      //           {
+      //             "internalType": "uint256",
+      //             "name": "groupId",
+      //             "type": "uint256"
+      //           }
+      //         ],
+      //         "name": "getGroupDetails",
+      //         "outputs": [
+      //           {
+      //             "internalType": "uint256",
+      //             "name": "id",
+      //             "type": "uint256"
+      //           },
+      //           {
+      //             "internalType": "string",
+      //             "name": "name",
+      //             "type": "string"
+      //           },
+      //           {
+      //             "internalType": "address[]",
+      //             "name": "members",
+      //             "type": "address[]"
+      //           },
+      //           {
+      //             "internalType": "uint256",
+      //             "name": "totalPayments",
+      //             "type": "uint256"
+      //           },
+      //           {
+      //             "internalType": "bool",
+      //             "name": "active",
+      //             "type": "bool"
+      //           }
+      //         ],
+      //         "stateMutability": "view",
+      //         "type": "function"
+      //       },
+      //       args: {
+      //         groupId: result[0]
+      //       }
+      //     }
+      //   }
+      // };
+
+      // const { data } = await axios.request(options);
+      // console.log("group data singular",data.data);
+
+
+
+
+      // setGroupExpenses(result as [bigint[], string[], bigint[], boolean[]]);
       console.log("group", groupExpenses);
     } catch (error) {
       console.log("error", error);

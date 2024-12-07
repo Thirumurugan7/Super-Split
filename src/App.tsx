@@ -15,6 +15,7 @@ import { OktoProvider, BuildType } from 'okto-sdk-react';
 import Dashboard from "Components/Dashboard";
 import CreateSubscription from "Components/CreateSubscription";
 import Subscriptions from "Components/Subscriptions";
+import CreateGroup from "Components/CreateGroup";
 const OKTO_CLIENT_API_KEY = "ac9502db-13f0-4074-8ae0-6dc10ad2d0c5";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path="/Dashboard" element={<Dashboard setAuthToken={setAuthToken} authToken={authToken} handleLogout={handleLogout} />} />
           <Route path="/CreateSubscription" element={<CreateSubscription setAuthToken={setAuthToken} authToken={authToken} handleLogout={handleLogout} />} />
           <Route path="/Subscriptions" element={<Subscriptions  setAuthToken={setAuthToken} authToken={authToken} handleLogout={handleLogout} />} />
+          <Route path="/CreateGroup" element={<CreateGroup setAuthToken={setAuthToken} authToken={authToken} handleLogout={handleLogout} />} />
 
         
         </Routes>

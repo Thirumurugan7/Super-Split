@@ -7,6 +7,9 @@ interface GroupExpensesTableProps {
 const GroupExpensesTable: React.FC<GroupExpensesTableProps> = ({
   groupExpenses,
 }) => {
+
+  console.log("group",groupExpenses);
+  
   const structuredGroupExpenses =
     groupExpenses[0]?.map((id, index) => ({
       id,
