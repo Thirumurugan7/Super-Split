@@ -10,11 +10,13 @@ import {
 import contractsJSON from "../../public/abis/7887.json";
 import { MdVerified } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { setNetwork, setWalletAddress } from "../../store/store";
+import { setNetwork, setWalletAddress , setAuth} from "../../store/store";
 import { Link } from "react-router-dom";
 import { GoogleLogin, CredentialResponse, GoogleCredentialResponse } from "@react-oauth/google";
 import { useOkto } from "okto-sdk-react";
 import { createContext, useContext } from 'react';
+import {  useNavigate } from "react-router-dom";
+
 import axios from "axios"
 
 const OKTO_CLIENT_API_KEY = "ac9502db-13f0-4074-8ae0-6dc10ad2d0c5";
@@ -28,6 +30,7 @@ interface NavbarProps {
 function Navbar({handleLogout, authToken, setAuthToken}:NavbarProps) {
   const dispatch = useDispatch();
   const network = useSelector((state: any) => state?.network?.network);
+  const Navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
@@ -79,29 +82,8 @@ function Navbar({handleLogout, authToken, setAuthToken}:NavbarProps) {
       return;
     }
 
-    const Auth = async (auth: string) => {
-      try {
-        const res = await axios.post("https://suzuka-okto-be.vercel.app/deploy-token", {
-          token: idToken,
-          auth: auth,
-        });
-        console.log("res", res);
-      } catch (error) {
-        console.error("Error in Auth:", error);
-      }
-    };
 
-  //   oktoDB?.authenticate?.(idToken, async (authResponse: any | null, error: Error | null) => {
-  //     // if (authResponse) {
-  //     //   console.log("authResponse", authResponse);
-  //     //   setAuthToken(authResponse.auth_token);
-  //     // }
-  //     // if (error) {
-  //     //   console.error("Authentication error:", error);
-  //     // }
-  //   }
-  
-  // );
+
 
 
   if(authenticate){
@@ -112,11 +94,15 @@ function Navbar({handleLogout, authToken, setAuthToken}:NavbarProps) {
       if (authResponse) {
         console.log("authResponse",authResponse);
         console.log("authResponse.auth_token",authResponse.auth_token);
-        
+        dispatch(setAuth(authResponse.auth_token))
+
+        localStorage.setItem("auth",authResponse.auth_token)
+
         setAuthToken(authResponse.auth_token);
 
+       
         // Auth(authResponse.auth_token);
-
+        Navigate("/Dashboard");
 
         // navigate("/gf");
       }
@@ -168,7 +154,7 @@ function Navbar({handleLogout, authToken, setAuthToken}:NavbarProps) {
         </select>
         </div>
 
-        {network === "base" || network === "hedepolra" || network === "supra" ? 
+        {network === "base" || network === "pol" || network === "supra" ? 
    <>
    <div className="hidden md:block">
               {!authToken ? (

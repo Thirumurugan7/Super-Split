@@ -15,6 +15,18 @@ const walletSlice = createSlice({
     },
   },
 });
+const AuthSlice = createSlice({
+  name: "auth",
+  initialState: { auth: "" },
+  reducers: {
+    setAuth: (state, action) => {
+      state.auth = action.payload;
+    },
+    clearAuth: (state) => {
+      state.auth = "";
+    },
+  },
+});
 
 const networkSlice = createSlice({
   name: "network",
@@ -32,6 +44,7 @@ const networkSlice = createSlice({
 export const { setWalletAddress, clearWalletAddress } = walletSlice.actions;
 
 export const { setNetwork, clearNetwork } = networkSlice.actions;
+export const { setAuth, clearAuth } = AuthSlice.actions;
 
 const persistConfig = {
   key: "root",
@@ -41,6 +54,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   wallet: walletSlice.reducer,
   network: networkSlice.reducer,
+  auth: AuthSlice.reducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
