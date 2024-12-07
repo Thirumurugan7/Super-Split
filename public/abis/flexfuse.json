@@ -298,7 +298,7 @@
         "type": "uint256"
       },
       {
-        "internalType": "enum FlexFuse.Frequency",
+        "internalType": "enum SuperSplit.Frequency",
         "name": "frequency",
         "type": "uint8"
       }
@@ -462,7 +462,7 @@
             "type": "uint256"
           },
           {
-            "internalType": "enum FlexFuse.Frequency",
+            "internalType": "enum SuperSplit.Frequency",
             "name": "frequency",
             "type": "uint8"
           },
@@ -472,7 +472,7 @@
             "type": "bool"
           }
         ],
-        "internalType": "struct FlexFuse.Subscription[]",
+        "internalType": "struct SuperSplit.Subscription[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -565,7 +565,7 @@
   {
     "inputs": [
       {
-        "internalType": "enum FlexFuse.Frequency",
+        "internalType": "enum SuperSplit.Frequency",
         "name": "frequency",
         "type": "uint8"
       }
@@ -663,7 +663,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct FlexFuse.Transaction[]",
+        "internalType": "struct SuperSplit.Transaction[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -714,7 +714,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct FlexFuse.Transaction[]",
+        "internalType": "struct SuperSplit.Transaction[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -750,7 +750,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct FlexFuse.UserSubscription[]",
+        "internalType": "struct SuperSplit.UserSubscription[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -790,6 +790,29 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "groupId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "payGroupExpense",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -836,7 +859,7 @@
         "type": "uint256"
       },
       {
-        "internalType": "enum FlexFuse.Frequency",
+        "internalType": "enum SuperSplit.Frequency",
         "name": "frequency",
         "type": "uint8"
       }
@@ -915,7 +938,7 @@
         "type": "uint256"
       },
       {
-        "internalType": "enum FlexFuse.Frequency",
+        "internalType": "enum SuperSplit.Frequency",
         "name": "frequency",
         "type": "uint8"
       },

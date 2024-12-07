@@ -6,7 +6,7 @@ import { createKintoSDK } from "kinto-web-sdk";
 import { Link, useNavigate } from "react-router-dom";
 import { FaAngleLeft } from "react-icons/fa6";
 import { FaPlus, FaTimes } from "react-icons/fa";
-import { POLYGON_CONTRACT_ADDRESS, SEPOLIA_CONTRACT_ADDRESS_SENDER } from "../constants";
+import { BASE_CONTRACT, POLYGON_CONTRACT_ADDRESS, SEPOLIA_CONTRACT_ADDRESS_SENDER } from "../constants";
 import { useSelector } from "react-redux";
 import axios from "axios";
 const contractAddress = "0x6f0029F082e03ee480684aC5Ef7fF019813ac1C2";
@@ -16,6 +16,12 @@ function CreateGroup({ setAuthToken, authToken, handleLogout }:any) {
   const network = useSelector((state: any) => state?.network?.network);
   const router = useNavigate();
 
+  const ethcontractaddress =
+  network === "base"
+    ? BASE_CONTRACT
+    : network === "pol"
+    ? POLYGON_CONTRACT_ADDRESS
+    : POLYGON_CONTRACT_ADDRESS;
   async function creategroup({
     name,
     members,
@@ -49,7 +55,10 @@ const networks = walletsResponse.data.data.wallets;
 
 console.log("networks",networks);
 
-const baseAddress = networks.find((network:{ network_name: String; address: String }) => network.network_name === 'POLYGON_TESTNET_AMOY').address;
+const networkName = network === "base" ? "BASE" : network === "pol" ? "POLYGON_TESTNET_AMOY" : "APTOS"
+
+
+const baseAddress = networks.find((network:{ network_name: String; address: String }) => network.network_name === networkName).address;
 
 console.log("address",baseAddress)
     
@@ -58,10 +67,10 @@ const options = {
   url: 'https://sandbox-api.okto.tech/api/v1/rawtransaction/execute',
   headers: {Authorization: `Bearer ${authy}`, 'Content-Type': 'application/json'},
   data: {
-    network_name: 'POLYGON_TESTNET_AMOY',
+    network_name: networkName,
     transaction: {
       from: baseAddress,
-      to: POLYGON_CONTRACT_ADDRESS,
+      to: ethcontractaddress,
       data: data,
       value: '0x'
     }

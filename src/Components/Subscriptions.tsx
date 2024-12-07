@@ -14,7 +14,7 @@ import FlexfuseAbi from "../../public/abis/flexfuse.json";
 import { Link } from "react-router-dom";
 import { ethers } from "ethers";
 import { useSelector } from "react-redux";
-import { FLARE_CONTRACT_ADDRESS_SENDER, HEDERA_CONTRACT_ADDRESS_SENDER, POLYGON_CONTRACT_ADDRESS, SEPOLIA_CONTRACT_ADDRESS_SENDER } from "../constants";
+import { BASE_CONTRACT, FLARE_CONTRACT_ADDRESS_SENDER, HEDERA_CONTRACT_ADDRESS_SENDER, POLYGON_CONTRACT_ADDRESS, SEPOLIA_CONTRACT_ADDRESS_SENDER } from "../constants";
 import { FaAngleLeft } from "react-icons/fa6";
 import axios from "axios";
 const contractadddress = "0x6f0029F082e03ee480684aC5Ef7fF019813ac1C2";
@@ -27,8 +27,8 @@ function Subscriptions({ setAuthToken, authToken, handleLogout }:any) {
   const ethcontractaddress = 
   network === 'pol' 
     ? POLYGON_CONTRACT_ADDRESS
-    : network === 'hedera' 
-      ? HEDERA_CONTRACT_ADDRESS_SENDER 
+    : network === 'base' 
+      ? BASE_CONTRACT 
       : FLARE_CONTRACT_ADDRESS_SENDER;
   const itemsPerPage = 4;
 
@@ -42,15 +42,16 @@ function Subscriptions({ setAuthToken, authToken, handleLogout }:any) {
         try {
 
           const authy = localStorage.getItem("auth")
-          
+          const networkName = network === "base" ? "BASE" : network === "pol" ? "POLYGON_TESTNET_AMOY" : "APTOS"
+
           const options = {
             method: 'POST',
             url: 'https://sandbox-api.okto.tech/api/v1/readContractData',
             headers: {Authorization: `Bearer ${authy}`, 'Content-Type': 'application/json'},
             data: {
-              network_name: 'POLYGON_TESTNET_AMOY',
+              network_name: networkName,
               data: {
-                contractAddress: POLYGON_CONTRACT_ADDRESS,
+                contractAddress: ethcontractaddress,
                 abi: {
                   inputs: [],
                   name: 'getAllSubscriptions',

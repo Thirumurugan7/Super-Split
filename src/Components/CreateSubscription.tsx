@@ -5,9 +5,11 @@ import FlexfuseAbi from "../../public/abis/flexfuse.json";
 import { Link, useNavigate } from "react-router-dom";
 import { FaAngleLeft } from "react-icons/fa6";
 import {
+  BASE_CONTRACT,
   FLARE_CONTRACT_ADDRESS_SENDER,
   HEDERA_CONTRACT_ADDRESS_SENDER,
   POLYGON_CONTRACT_ADDRESS,
+  POLYGON_USDC_ADDRESS,
   SEPOLIA_CONTRACT_ADDRESS_SENDER,
   tokenDefaultAddress,
 } from "../constants";
@@ -23,10 +25,12 @@ function CreateSubscription({ setAuthToken, authToken, handleLogout }:any) {
   const network = useSelector((state: any) => state?.network?.network);
   const ethcontractaddress =
     network === "base"
-      ? SEPOLIA_CONTRACT_ADDRESS_SENDER
+      ? BASE_CONTRACT
       : network === "pol"
       ? POLYGON_CONTRACT_ADDRESS
       : FLARE_CONTRACT_ADDRESS_SENDER;
+
+
 
   async function createSubscription({
     name,
@@ -63,19 +67,24 @@ console.log("wallets", walletsResponse.data.data.wallets);
 const networks = walletsResponse.data.data.wallets;
 
 console.log("networks",networks);
+const networkName = network === "base" ? "BASE" : network === "pol" ? "POLYGON_TESTNET_AMOY" : "APTOS"
 
-const baseAddress = networks.find((network:{ network_name: String; address: String }) => network.network_name === 'POLYGON_TESTNET_AMOY').address;
+const baseAddress = networks.find((network:{ network_name: String; address: String }) => network.network_name === networkName).address;
+
+
 
 console.log("address",baseAddress)
+
+
       const options = {
         method: 'POST',
         url: 'https://sandbox-api.okto.tech/api/v1/rawtransaction/execute',
         headers: {Authorization: `Bearer ${authy}`, 'Content-Type': 'application/json'},
         data: {
-          network_name: 'POLYGON_TESTNET_AMOY',
+          network_name: networkName,
           transaction: {
             from: baseAddress,
-            to: POLYGON_CONTRACT_ADDRESS,
+            to: ethcontractaddress,
             data: data,
             value: '0x'
           }
@@ -92,7 +101,7 @@ console.log("address",baseAddress)
       //   { to: contractadddress, data, value: BigInt(0) },
       // ]);
       // console.log("Subscription created:", response);
-      // router("/Subscriptions");
+      router("/Subscriptions");
     } catch (error) {
       console.error("Error creating subscription:", error);
       throw error;
@@ -106,9 +115,9 @@ console.log("address",baseAddress)
     baseAmount: "",
   });
   const defaultToken =
-    network === "kinto"
-      ? tokenDefaultAddress.kinto
-      : tokenDefaultAddress.sepolia;
+    network === "base"
+      ? "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+      : POLYGON_USDC_ADDRESS;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFields({ ...fields, [e.target.name]: e.target.value });

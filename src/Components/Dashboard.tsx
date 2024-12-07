@@ -16,7 +16,8 @@ import {
   SEPOLIA_CONTRACT_ADDRESS_SENDER,
   BASE_STAKER_CONTRACT_ADDRESS,
   BASE_RECEIVER_CONTRACT_ADDRESS,
-  POLYGON_USDC_ADDRESS,POLYGON_CONTRACT_ADDRESS
+  POLYGON_USDC_ADDRESS,POLYGON_CONTRACT_ADDRESS,
+  BASE_CONTRACT
 } from "../constants";
 // import { GETGROUPEXPENSE, GETSUBSCRIPTION } from "contracts/Integration";
 import { useAccount } from "wagmi";
@@ -60,7 +61,7 @@ const Dashboard = ({ setAuthToken, authToken, handleLogout }:any) => {
   >("subscriptions");
   const ethcontractaddress =
     network === "base"
-      ? POLYGON_CONTRACT_ADDRESS
+      ? BASE_CONTRACT
       : network === "pol"
       ? POLYGON_CONTRACT_ADDRESS
       : FLARE_CONTRACT_ADDRESS_SENDER;
@@ -106,13 +107,15 @@ console.log("authy",authy);
 
     const GETSUBSCRIPTION = async() => {
       try {
+
+        const networkName = network === "base" ? "BASE" : network === "pol" ? "POLYGON_TESTNET_AMOY" : "APTOS"
         
         const options = {
           method: 'POST',
           url: 'https://sandbox-api.okto.tech/api/v1/readContractData',
           headers: {Authorization: `Bearer ${authy}`, 'Content-Type': 'application/json'},
           data: {
-            network_name: 'POLYGON_TESTNET_AMOY',
+            network_name: networkName,
             data: {
               contractAddress: ethcontractaddress,
               abi: {
@@ -214,6 +217,7 @@ console.log("authy",authy);
 
 
     const GETGROUPEXPENSE = async () => {
+      const networkName = network === "base" ? "BASE" : network === "pol" ? "POLYGON_TESTNET_AMOY" : "APTOS"
 
       try {
         const options = {
@@ -221,7 +225,7 @@ console.log("authy",authy);
           url: 'https://sandbox-api.okto.tech/api/v1/readContractData',
           headers: {Authorization: `Bearer ${authy}`, 'Content-Type': 'application/json'},
           data: {
-            network_name: 'POLYGON_TESTNET_AMOY',
+            network_name: networkName,
             data: {
               contractAddress: ethcontractaddress,
               abi: {
@@ -266,7 +270,10 @@ console.log("authy",authy);
 
           const results: ContractGroup[] = [];
   
-          const fetchSingleGroup = async (value: number): Promise<ContractGroup | null> => {
+          const fetchSingleGroup = async (value: number): Promise<any | null> => {
+
+            const networkName = network === "base" ? "BASE" : network === "pol" ? "POLYGON_TESTNET_AMOY" : "APTOS"
+
             const options = {
               method: 'POST',
               url: 'https://sandbox-api.okto.tech/api/v1/readContractData',
@@ -275,7 +282,7 @@ console.log("authy",authy);
                 'Content-Type': 'application/json'
               },
               data: {
-                network_name: 'POLYGON_TESTNET_AMOY',
+                network_name: networkName,
                 data: {
                   contractAddress: ethcontractaddress,
                   abi:    {
@@ -336,7 +343,7 @@ console.log("authy",authy);
           };
         
 
-          const promises = data.data[0].map(value => fetchSingleGroup(value));
+          const promises = data.data[0].map((value:any )=> fetchSingleGroup(value));
   const resultsofall = await Promise.all(promises);
 
 console.log("results of all",resultsofall);

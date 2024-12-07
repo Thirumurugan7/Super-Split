@@ -114,11 +114,16 @@ function Navbar({handleLogout, authToken, setAuthToken}:NavbarProps) {
   }
   };
 
+  const authy = localStorage.getItem("auth")
+
+  console.log("auhty",authy);
+  
+
   return (
     <div className="flex justify-between py-4 pt-8 px-32 font-albertsans ">
       <Link className="flex gap-3 items-center" to="/">
         <img src="/logo.svg" alt="KintoHub Logo" />
-        <span className=" font-semibold text-2xl">FlexFuse</span>
+        <span className=" font-semibold text-2xl">Super Split</span>
       </Link>
       <div className="flex gap-8 items-center">
         <span>
@@ -157,7 +162,7 @@ function Navbar({handleLogout, authToken, setAuthToken}:NavbarProps) {
         {network === "base" || network === "pol" || network === "supra" ? 
    <>
    <div className="hidden md:block">
-              {!authToken ? (
+              {authy === "null" || authy === undefined || authy === null ? (
                 <div className="z-50">
                    <GoogleLogin
                 onSuccess={handleGoogleLogin}

@@ -8,7 +8,7 @@ function Footer() {
           <FaTwitter className="text-black text-2xl bg-white p-1 rounded-lg" />
           <FaLinkedinIn className="text-black text-2xl bg-white p-1 rounded-lg" />
         </div>
-        <p>© 2024 FlexFuse. All Rights Reserved.</p>
+        <p>© 2024 SuperSplit. All Rights Reserved.</p>
       </div>
     </div>
   );

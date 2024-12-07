@@ -16,6 +16,7 @@ import Dashboard from "Components/Dashboard";
 import CreateSubscription from "Components/CreateSubscription";
 import Subscriptions from "Components/Subscriptions";
 import CreateGroup from "Components/CreateGroup";
+import CreateExpenses from "Components/CreateExpenses";
 const OKTO_CLIENT_API_KEY = "ac9502db-13f0-4074-8ae0-6dc10ad2d0c5";
 
 function App() {
@@ -24,6 +25,8 @@ function App() {
   const handleLogout = () => {
     console.log("setting auth token to null");
     setAuthToken(null); // Clear the authToken
+    localStorage.removeItem("auth")
+
   };
   return (
     <div className="App">
@@ -37,6 +40,7 @@ function App() {
           <Route path="/CreateSubscription" element={<CreateSubscription setAuthToken={setAuthToken} authToken={authToken} handleLogout={handleLogout} />} />
           <Route path="/Subscriptions" element={<Subscriptions  setAuthToken={setAuthToken} authToken={authToken} handleLogout={handleLogout} />} />
           <Route path="/CreateGroup" element={<CreateGroup setAuthToken={setAuthToken} authToken={authToken} handleLogout={handleLogout} />} />
+          <Route path="/CreateExpenses" element={<CreateExpenses setAuthToken={setAuthToken} authToken={authToken} handleLogout={handleLogout} />} />
 
         
         </Routes>
