@@ -18,7 +18,7 @@
 
 ## Introduction
 
-FlexFuse is an innovative platform that simplifies decentralized finance (DeFi) interactions by providing seamless expense management and multi-chain subscription services. Built on the Kinto platform, FlexFuse leverages User-Owned KYC, Account Abstraction, and cross-chain interoperability to enable secure, non-custodial, and transparent transactions across various blockchains.
+SuperSplit is an innovative platform that simplifies decentralized finance (DeFi) interactions by providing seamless expense management and multi-chain subscription services. Built on the Okto platform, SuperSplit leverages User-Owned KYC, Account Abstraction, and cross-chain interoperability to enable secure, non-custodial, and transparent transactions across various blockchains.
 
 ## Features
 
@@ -29,21 +29,21 @@ FlexFuse is an innovative platform that simplifies decentralized finance (DeFi) 
 - **Customizable Payment Options**: Accepts a wide range of tokens and supports major blockchains.
 - **Subscription Analytics**: Dashboards for users and providers to track spending and revenues.
 - **Shared Wallet Subscriptions**: Groups can collectively subscribe to services using a shared wallet.
-- **Developer Incentives**: Mining rewards for developers building on FlexFuse.
+- **Developer Incentives**: Mining rewards for developers building on SuperSplit.
 
 ## How It Works
 
 ### Subscription Payments
 
 - **Users** pay for subscriptions using their preferred tokens and blockchains.
-- **FlexFuse** automatically converts and transfers payments to the service provider's preferred tokens and chains.
+- **SuperSplit** automatically converts and transfers payments to the service provider's preferred tokens and chains.
 - **Service Providers** receive payments seamlessly without worrying about token or chain incompatibilities.
 
 ### Group Expense Management
 
 - **Create Groups**: Users can form groups to manage shared expenses.
 - **Add Expenses**: Expenses are added to a shared ledger with transparent tracking.
-- **Settle Payments**: Members settle their balances using their preferred tokens and chains, with automatic conversions handled by FlexFuse.
+- **Settle Payments**: Members settle their balances using their preferred tokens and chains, with automatic conversions handled by SuperSplit.
 
 ## Usage
 
@@ -61,13 +61,13 @@ FlexFuse is an innovative platform that simplifies decentralized finance (DeFi) 
 
 ### For Service Providers
 
-- **Integrate with FlexFuse**: Expand your user base by accepting payments from any token and chain.
+- **Integrate with SuperSplit**: Expand your user base by accepting payments from any token and chain.
 - **Analytics Dashboard**: Access metrics on subscriber counts and revenue.
 - **Compliance**: Benefit from enhanced trust with User-Owned KYC and compliance tools.
 
 ## Technical Architecture
 
-- **Built on Kinto**: Utilizes Kinto’s User-Owned KYC and Account Abstraction.
+- **Built on SuperSplit**: Utilizes SuperSplit User-Owned KYC and Account Abstraction.
 - **Cross-Chain Compatibility**: Employs protocols like Connext and LayerZero for seamless interoperability.
 - **Smart Contracts**: Secure, modular, and transparent contracts audited for best practices.
 - **Frontend**: Developed with React for a responsive user interface.

@@ -72,16 +72,16 @@ function Home({ setAuthToken, authToken, handleLogout }:any) {
 
     {/* Context */}
     <div className="font-dmsans font-semibold text-center italic text-3xl">
-      No more hassle with cross-chain <br /> subscriptions — FlexFuse brings
+      No more hassle with cross-chain <br /> subscriptions — SuperSplit brings
       everything <br /> together in one place!
     </div>
 
     <div className="text-center font-dmsans mt-20">
       <p id="services" className="text-4xl font-semibold">
-        Why Choose FlexFuse?
+        Why Choose SuperSplit?
       </p>
       <p className="mt-3">
-        Explore the powerful features that make FlexFuse the ultimate platform
+        Explore the powerful features that make SuperSplit the ultimate platform
         for <br /> decentralized expense and subscription management.
       </p>
     </div>
@@ -188,7 +188,7 @@ function Home({ setAuthToken, authToken, handleLogout }:any) {
       <div className="text-center font-dmsans mt-20">
         <p className="text-4xl font-semibold">How It Works?</p>
         <p className="mt-3">
-          Explore the powerful features that make FlexFuse the ultimate
+          Explore the powerful features that make SuperSplit the ultimate
           platform for <br /> decentralized expense and subscription
           management.
         </p>
@@ -201,8 +201,9 @@ function Home({ setAuthToken, authToken, handleLogout }:any) {
             Create or Connect <br /> Your Wallet
           </p>
           <p className="text-[16px] opacity-[70%]">
-            Easily set up a secure wallet or connect an <br /> existing one
-            using Kinto’s Wallet SDK.
+          Easily set up a secure wallet or connect an <br />  existing one using Okto's Wallet SDK, ensuring a seamless onboarding experience.
+
+
           </p>
           <div className="flex justify-end -mt-14 -mb-3">
             <p className="font-playfair text-[160px] font-bold italic leading-none">
@@ -216,8 +217,9 @@ function Home({ setAuthToken, authToken, handleLogout }:any) {
             Verify Your <br /> Identity
           </p>
           <p className="text-[16px] opacity-[70%]">
-            Complete a quick, secure KYC verification to <br /> ensure a
-            trusted environment for all users.
+
+          Securely connect and authenticate your wallet through Okto,  <br /> ensuring a trusted and safe environment for all users.
+        
           </p>
           <div className="flex justify-end -mt-14 -mb-3">
             <p className="font-playfair text-[160px] font-bold italic leading-none">
@@ -232,8 +234,8 @@ function Home({ setAuthToken, authToken, handleLogout }:any) {
             Settle Payments <br /> Easily
           </p>
           <p className="text-[16px] opacity-[70%]">
-            Pay and receive funds in your preferred tokens <br /> and chains
-            for ultimate flexibility.
+          Pay and receive funds in your preferred tokens and across  <br />  multiple blockchains with Okto’s multi-chain transaction orchestration.
+
           </p>
           <div className="flex justify-end -mt-14 pb-2">
             <p className="font-playfair text-[160px] font-bold italic leading-none">
@@ -247,8 +249,8 @@ function Home({ setAuthToken, authToken, handleLogout }:any) {
             Manage Expenses <br /> and Subscriptions{" "}
           </p>
           <p className="text-[16px] opacity-[70%]">
-            Effortlessly split bills or subscribe to services <br /> across
-            different blockchains with ease.
+
+          Effortlessly split bills or manage subscriptions  <br /> across different blockchains using Okto’s gasless transaction capabilities.
           </p>
           <div className="flex justify-end -mt-14 ">
             <p className="font-playfair text-[160px] font-bold italic leading-none">
@@ -282,7 +284,7 @@ function Home({ setAuthToken, authToken, handleLogout }:any) {
       </p>
       <p className="text-base opacity-[60%]">
         Unlock the full potential of multi-chain transactions <br /> with
-        FlexFuse seamless expense and subscription <br /> management.
+        SuperSplit seamless expense and subscription <br /> management.
       </p>
       <Link to="/Dashboard">
         <p
@@ -302,7 +304,7 @@ function Home({ setAuthToken, authToken, handleLogout }:any) {
       <div>
         <div className="flex gap-3 items-center">
           <img src="/logo.svg" alt="KintoHub Logo" />
-          <span className=" font-semibold text-2xl">FlexFuse</span>
+          <span className=" font-semibold text-2xl">SuperSplit</span>
         </div>
         <p className="mt-3">
           Effortless multi-chain expense and <br /> subscription management.
