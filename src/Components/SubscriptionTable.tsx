@@ -12,6 +12,9 @@ interface SubscriptionTableProps {
 const SubscriptionTable: React.FC<SubscriptionTableProps> = ({
   subscriptionDetails,
 }) => {
+
+  console.log("subs",subscriptionDetails);
+  
   return subscriptionDetails.length > 0 ? (
     <table className="table-auto  w-full mt-5 border">
       <thead>

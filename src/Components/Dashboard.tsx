@@ -170,7 +170,7 @@ console.log("authy",authy);
           const { data } = await axios.request(options);
           console.log(data);
 
-          setSubscriptionDetails((data as any[]).slice(0, 2));
+          setSubscriptionDetails((data.data[0] as any[]));
             console.log("result", subscriptionDetails);
         } catch (error) {
           console.error(error);
@@ -289,7 +289,7 @@ console.log("authy",authy);
       <main className="flex-grow">
         {/* Main Content */}
         <div className="flex-grow p-6">
-          {walletAddress || account?.address ? (
+          {true ? (
             <>
               <p className="font-playfair text-center mt-8 italic font-bold text-3xl mb-6">
                 Welcome Back{" "}
