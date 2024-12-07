@@ -6,6 +6,9 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { store, persistor } from "../../FlexFuse/store/store";
 import '@rainbow-me/rainbowkit/styles.css';
+
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
 import {
   getDefaultConfig,
   RainbowKitProvider,
@@ -16,6 +19,7 @@ import {
   QueryClientProvider,
   QueryClient,
 } from "@tanstack/react-query";
+const GOOGLE_CLIENT_ID = "382833983704-bns3ev7fcji4iq4tfcjqjlb1arqna9b9.apps.googleusercontent.com"
 
 const config = getDefaultConfig({
   appName: 'My RainbowKit App',
@@ -36,7 +40,9 @@ root.render(
         <RainbowKitProvider>
           <Provider store={store}>
          
-              <App />
+          <GoogleOAuthProvider clientId = {GOOGLE_CLIENT_ID}>
+     <App />
+   </GoogleOAuthProvider>
           
           </Provider>
         </RainbowKitProvider>
