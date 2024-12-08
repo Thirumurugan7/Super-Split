@@ -1,8 +1,14 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { configureStore, createSlice,PayloadAction } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
 
+interface AuthState {
+  auth: {
+    provider: any;  // Type this according to your provider type
+    address: string;
+  } | null;
+}
 const walletSlice = createSlice({
   name: "wallet",
   initialState: { address: "" },
@@ -17,16 +23,17 @@ const walletSlice = createSlice({
 });
 const AuthSlice = createSlice({
   name: "auth",
-  initialState: { auth: "" },
+  initialState: { auth: null } as AuthState,
   reducers: {
-    setAuth: (state, action) => {
+    setAuth: (state, action: PayloadAction<{ provider: any; address: string }>) => {
       state.auth = action.payload;
     },
     clearAuth: (state) => {
-      state.auth = "";
+      state.auth = null;
     },
   },
 });
+
 
 const networkSlice = createSlice({
   name: "network",

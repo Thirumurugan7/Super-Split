@@ -14,6 +14,7 @@ import {
   tokenDefaultAddress,
 } from "../constants";
 import { useSelector } from "react-redux";
+import { Contract, RpcProvider , Nonce } from "starknet";
 
 import { toast } from "react-toastify";
 
@@ -23,6 +24,9 @@ const contractadddress = "0x6f0029F082e03ee480684aC5Ef7fF019813ac1C2";
 function CreateSubscription({ setAuthToken, authToken, handleLogout }:any) {
   const router = useNavigate();
   const network = useSelector((state: any) => state?.network?.network);
+
+  const auth = useSelector((state: any) => state?.auth?.auth);
+
   const ethcontractaddress =
     network === "base"
       ? BASE_CONTRACT
@@ -56,6 +60,53 @@ const authy = localStorage.getItem("auth")
 console.log("authy", authy);
 
 
+
+if(network === "starknet"){
+  console.log("starknet");
+
+  const contractAddress = "0x75a49eb37cf05058feb345e8bfbba12ab2c2be31fae9e0e53c700ab75ef7462"
+  const getValue = async () => {
+    const provider = new RpcProvider({
+      nodeUrl:
+        "https://starknet-sepolia.g.alchemy.com/starknet/version/rpc/v0_7/NC_mjlIJfcEpaOhs3JB4JHcjFQhcFOrs",
+    });
+console.log("auth",auth);
+console.log("auth",auth.provider.provider);
+
+    // const provider = auth.provider.provider;
+    const ContAbi = await provider.getClassAt(contractAddress);
+    console.log(">> contract abi", ContAbi);
+    const newContract = new Contract(
+      ContAbi.abi,
+      contractAddress,
+      provider
+    );
+    const address = auth?.address;
+    console.log("wallet address", address);
+    console.log("contract details",  newContract);
+    // const response = await newContract.increment();
+    // Call the contract function
+    console.log("sdcdas",  newContract);
+    
+    const nonce = await provider.getNonceForAddress(contractAddress)
+    // const response =  await newContract.create_subscription(name, description, "0x1", token,{nonce});
+    const response =  await newContract.populate("create_subscription",[name, description, "0x1", token]);
+// const re = await newContract.invoke("create_subscription", [name, description, "0x1", token] ,{nonce})
+    console.log(">> response", response);
+
+    // const response1 =  await newContract.populateTransaction("create_subscription",[name, description, "0x1", token]);
+
+    // console.log(">> response", re);
+
+    // No need for .flat(), since the response is a single value
+    // setCount(response);
+    console.log("Current value:", response);
+  };
+
+  getValue()
+  return
+}
+
 const walletsResponse = await axios({  // renamed to walletsResponse
   method: 'post',
   url: "https://sandbox-api.okto.tech/api/v1/wallet",
@@ -67,7 +118,8 @@ console.log("wallets", walletsResponse.data.data.wallets);
 const networks = walletsResponse.data.data.wallets;
 
 console.log("networks",networks);
-const networkName = network === "base" ? "BASE" : network === "pol" ? "POLYGON_TESTNET_AMOY" : "APTOS"
+
+const networkName = network === "base" ? "BASE" : network === "pol" ? "POLYGON_TESTNET_AMOY" : network === "starknet" ? "STARK" :  "APTOS"
 
 const baseAddress = networks.find((network:{ network_name: String; address: String }) => network.network_name === networkName).address;
 

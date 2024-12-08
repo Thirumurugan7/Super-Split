@@ -16,6 +16,7 @@ import { GoogleLogin, CredentialResponse, GoogleCredentialResponse } from "@reac
 import { useOkto } from "okto-sdk-react";
 import { createContext, useContext } from 'react';
 import {  useNavigate } from "react-router-dom";
+import { connect, disconnect , ConnectedStarknetWindowObject} from "@argent/get-starknet";
 
 import axios from "axios"
 
@@ -31,7 +32,9 @@ function Navbar({handleLogout, authToken, setAuthToken}:NavbarProps) {
   const dispatch = useDispatch();
   const network = useSelector((state: any) => state?.network?.network);
   const Navigate = useNavigate();
+  const WW_URL = "https://web.argent.xyz";
 
+  const [connection, setConnection] =  useState<ConnectedStarknetWindowObject | undefined>(undefined);
   const [loading, setLoading] = useState(false);
 
   const [accountInfo, setAccountInfo] = useState<any | undefined>(
@@ -117,6 +120,29 @@ function Navbar({handleLogout, authToken, setAuthToken}:NavbarProps) {
   const authy = localStorage.getItem("auth")
 
   console.log("auhty",authy);
+
+
+  useEffect(() => {
+    const connectToStarknet = async () => {
+      const connection = await connect({
+        modalMode: "neverAsk",
+        webWalletUrl: WW_URL,
+      });
+
+      if (connection && connection.isConnected && connection.account) {
+        setConnection(connection);
+
+        dispatch(
+          setAuth({
+            provider: connection.account,
+            address: connection.account.address,
+          })
+        );
+      }
+    };
+    connectToStarknet();
+  }, []);
+
   
 
   return (
@@ -190,7 +216,39 @@ function Navbar({handleLogout, authToken, setAuthToken}:NavbarProps) {
 </>
         :
           <div>
-          
+            <div>
+              {!connection ? (
+                <>
+                  <button
+                    onClick={async () => {
+                      const connection = await connect({
+                        webWalletUrl: WW_URL,
+                      });
+
+                      if (connection && connection.isConnected) {
+                        setConnection(connection);
+                      }
+                    }}
+                  >
+                    Connect wallet
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="flex">
+                    {/* <WalletDetails wallet={connection} /> */}
+                    <button
+                      onClick={async () => {
+                        await disconnect();
+                        setConnection(undefined);
+                      }}
+                    >
+                      Disconnect wallet
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
           
           </div>
         }

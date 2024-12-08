@@ -21,10 +21,37 @@ module.exports = {
     },
 
     configure: (webpackConfig) => {
+      // Add TypeScript handling
+      const tsRule = {
+        test: /\.tsx?$/,
+        use: [
+          {
+            loader: require.resolve('ts-loader'),
+            options: {
+              transpileOnly: true,
+            },
+          },
+        ],
+        exclude: /node_modules/,
+      };
+
+      // Add TypeScript rule to existing rules
+      if (webpackConfig.module.rules) {
+        webpackConfig.module.rules.push(tsRule);
+      }
+
+      // Add TypeScript extensions to resolve
+      webpackConfig.resolve.extensions = [
+        ...(webpackConfig.resolve.extensions || []),
+        '.ts',
+        '.tsx'
+      ];
+
+      // Your existing fallback configuration
       webpackConfig.resolve.fallback = {
         ...webpackConfig.resolve.fallback,
         path: require.resolve("path-browserify"),
-        process: require.resolve("process/browser"), // Ensure process is aliased correctly
+        process: require.resolve("process/browser"),
         assert: require.resolve("assert"),
         buffer: require.resolve("buffer"),
         http: require.resolve("stream-http"),

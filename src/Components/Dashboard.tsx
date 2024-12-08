@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { Contract, RpcProvider } from "starknet";
+
 import {
   Address,
   createPublicClient,
@@ -11,15 +13,11 @@ import {
 } from "viem";
 import FlexfuseAbi from "../../public/abis/flexfuse.json";
 import {
-  FLARE_CONTRACT_ADDRESS_SENDER,
-  HEDERA_CONTRACT_ADDRESS_SENDER,
-  SEPOLIA_CONTRACT_ADDRESS_SENDER,
-  BASE_STAKER_CONTRACT_ADDRESS,
-  BASE_RECEIVER_CONTRACT_ADDRESS,
+  
+
   POLYGON_USDC_ADDRESS,POLYGON_CONTRACT_ADDRESS,
   BASE_CONTRACT
 } from "../constants";
-// import { GETGROUPEXPENSE, GETSUBSCRIPTION } from "contracts/Integration";
 import { useAccount } from "wagmi";
 import SubscriptionTable from "./SubscriptionTable";
 import GroupExpensesTable from "./GroupExpensesTable";
@@ -64,7 +62,7 @@ const Dashboard = ({ setAuthToken, authToken, handleLogout }:any) => {
       ? BASE_CONTRACT
       : network === "pol"
       ? POLYGON_CONTRACT_ADDRESS
-      : FLARE_CONTRACT_ADDRESS_SENDER;
+      : POLYGON_CONTRACT_ADDRESS;
 
 
       console.log("auth",auth);
@@ -78,26 +76,7 @@ console.log("authy",authy);
 
     setLoading(false);
 
-    // try {
-    //   const client = createPublicClient({
-    //     chain: KINTO_CHAIN,
-    //     transport: http(),
-    //   });
-
-    //   const contract = getContract({
-    //     address: CONTRACT_ADDRESS as Address,
-    //     abi: FlexfuseAbi,
-    //     client: { public: client },
-    //   });
-
-    //   const details = await contract.read.getAllSubscriptions();
-    //   setSubscriptionDetails((details as any[]).slice(0, 2));
-    //   console.log("details", subscriptionDetails);
-    // } catch (error) {
-    //   console.error("Error fetching subscription details:", error);
-    // } finally {
-    //   setLoading(false);
-    // }
+ 
   };
 
   const fetchSubscriptionDetailsEth = async () => {
@@ -107,9 +86,47 @@ console.log("authy",authy);
 
     const GETSUBSCRIPTION = async() => {
       try {
+console.log("aavfasf",network);
 
-        const networkName = network === "base" ? "BASE" : network === "pol" ? "POLYGON_TESTNET_AMOY" : "APTOS"
+        const networkName = network === "base" ? "BASE" : network === "pol" ? "POLYGON_TESTNET_AMOY" : network === "starknet" ? "STARK" :  "APTOS"
         
+
+        if(network === "starknet"){
+          console.log("starknet");
+
+          const contractAddress = "0x75a49eb37cf05058feb345e8bfbba12ab2c2be31fae9e0e53c700ab75ef7462"
+          const getValue = async () => {
+            const provider = new RpcProvider({
+              nodeUrl:
+                "https://starknet-sepolia.g.alchemy.com/starknet/version/rpc/v0_7/NC_mjlIJfcEpaOhs3JB4JHcjFQhcFOrs",
+            });
+            const ContAbi = await provider.getClassAt(contractAddress);
+            console.log(">> contract abi", ContAbi);
+            const newContract = new Contract(
+              ContAbi.abi,
+              contractAddress,
+              provider
+            );
+            const address = auth?.address;
+            console.log("wallet address", address);
+            console.log("contract details",  newContract);
+            // const response = await newContract.increment();
+            // Call the contract function
+            console.log("sdcdas",  newContract);
+            
+            const response =  await newContract.get_all_subscriptions();
+        
+            console.log(">> response", response);
+        
+            // No need for .flat(), since the response is a single value
+            // setCount(response);
+            console.log("Current value:", response);
+          };
+
+          getValue()
+          return
+        }
+
         const options = {
           method: 'POST',
           url: 'https://sandbox-api.okto.tech/api/v1/readContractData',
@@ -202,13 +219,7 @@ console.log("authy",authy);
 
     GETSUBSCRIPTION()
 
-    // try {
-    //   const result = await GETSUBSCRIPTION(ethcontractaddress);
-    //   setSubscriptionDetails((result as any[]).slice(0, 2));
-    //   console.log("result", subscriptionDetails);
-    // } catch (error) {
-    //   console.log("error", error);
-    // }
+   
   };
 
 
@@ -385,66 +396,10 @@ console.log("asfgsf",formattedData);
 console.log("resulessfd",result);
 
    
-      //   method: 'POST',
-      //   url: 'https://sandbox-api.okto.tech/api/v1/readContractData',
-      //   headers: {Authorization: `Bearer ${authy}`, 'Content-Type': 'application/json'},
-      //   data: {
-      //     network_name: 'POLYGON_TESTNET_AMOY',
-      //     data: {
-      //       contractAddress: ethcontractaddress,
-      //       abi:    {
-      //         "inputs": [
-      //           {
-      //             "internalType": "uint256",
-      //             "name": "groupId",
-      //             "type": "uint256"
-      //           }
-      //         ],
-      //         "name": "getGroupDetails",
-      //         "outputs": [
-      //           {
-      //             "internalType": "uint256",
-      //             "name": "id",
-      //             "type": "uint256"
-      //           },
-      //           {
-      //             "internalType": "string",
-      //             "name": "name",
-      //             "type": "string"
-      //           },
-      //           {
-      //             "internalType": "address[]",
-      //             "name": "members",
-      //             "type": "address[]"
-      //           },
-      //           {
-      //             "internalType": "uint256",
-      //             "name": "totalPayments",
-      //             "type": "uint256"
-      //           },
-      //           {
-      //             "internalType": "bool",
-      //             "name": "active",
-      //             "type": "bool"
-      //           }
-      //         ],
-      //         "stateMutability": "view",
-      //         "type": "function"
-      //       },
-      //       args: {
-      //         groupId: result[0]
-      //       }
-      //     }
-      //   }
-      // };
-
-      // const { data } = await axios.request(options);
-      // console.log("group data singular",data.data);
+   
 
 
 
-
-      // setGroupExpenses(result as [bigint[], string[], bigint[], boolean[]]);
       console.log("group", groupExpenses);
     } catch (error) {
       console.log("error", error);
@@ -452,7 +407,7 @@ console.log("resulessfd",result);
   };
 
   useEffect(() => {
- if (network === "pol" || network === "base") {
+ if (network === "pol" || network === "base" || network === "starknet") {
       if (activeSection === "subscriptions") {
         fetchSubscriptionDetailsEth();
       }

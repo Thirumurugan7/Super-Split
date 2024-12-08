@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@argent/get-starknet": "^6.4.7",
     "@craco/craco": "^7.1.0",
     "@lottiefiles/react-lottie-player": "^3.5.4",
     "@mui/material": "^5.16.7",
@@ -16,9 +17,6 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.104",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
     "ajv": "^8.17.1",
     "ajv-keywords": "^5.1.0",
     "axios": "^1.7.9",
@@ -41,11 +39,11 @@
     "react-toastify": "^10.0.6",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
+    "starknet": "^6.11.0",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "styled-components": "^6.1.12",
     "terser-webpack-plugin": "^5.3.10",
-    "typescript": "^5.5.4",
     "viem": "^2.21.45",
     "wagmi": "^2.12.33",
     "web-vitals": "^2.1.4",
@@ -81,7 +79,12 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/node": "^22.10.1",
     "@types/numeral": "^2.0.5",
-    "babel-plugin-styled-components": "^2.1.4"
+    "@types/react": "^18.3.14",
+    "@types/react-dom": "^19.0.1",
+    "babel-plugin-styled-components": "^2.1.4",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.7.2"
   }
 }
